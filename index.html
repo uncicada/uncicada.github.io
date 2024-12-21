@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CICADA.COM</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #draggable {
+		
+            width: 600px;
+            height: 400px;
+            background-image: url('1.png');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+<div id="draggable"> </div>
+
+<script>
+    const draggable = document.getElementById('draggable');
+
+    draggable.addEventListener('mousedown', (event) => {
+        const height = draggable.clientHeight;
+        const dragAreaHeight = height * 0.3;
+        const mouseY = event.clientY - draggable.getBoundingClientRect().top;
+
+        if (mouseY <= dragAreaHeight) {
+            let offsetX = event.clientX - draggable.getBoundingClientRect().left;
+            let offsetY = event.clientY - draggable.getBoundingClientRect().top;
+
+            function mouseMoveHandler(e) {
+                draggable.style.left = `${e.clientX - offsetX}px`;
+                draggable.style.top = `${e.clientY - offsetY}px`;
+            }
+
+            function mouseUpHandler() {
+                document.removeEventListener('mousemove', mouseMoveHandler);
+                document.removeEventListener('mouseup', mouseUpHandler);
+            }
+
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+        }
+    });
+
+    draggable.addEventListener('click', () => {
+        //alert('你点击了我！');
+    });
+</script>
+
+</body>
+</html>
