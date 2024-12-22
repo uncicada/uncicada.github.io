@@ -13,12 +13,10 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-
         .draggable {
             position: absolute;
             cursor: default;
         }
-
         #addpic {
             width: 761px;
             height: 771px;
@@ -26,7 +24,6 @@
             background-size: cover;
             background-position: center;
         }
-
         #addtext {
             width: 641px;
             height: 858px;
@@ -34,7 +31,6 @@
             background-size: cover;
             background-position: center;
         }
-
         #char {
             width: 761px;
             height: 1065px;
@@ -42,7 +38,6 @@
             background-size: cover;
             background-position: center;
         }
-
         #subtitle {
             width: 3234px;
             height: 182px;
@@ -50,7 +45,6 @@
             background-size: cover;
             background-position: center;
         }
-
         #title {
             width: 1924px;
             height: 137px;
@@ -58,7 +52,7 @@
             background-size: cover;
             background-position: center;
         }
-		#main {
+        #main {
             width: 3054px;
             height: 1718px;
             background-image: url('res/main.png');
@@ -78,30 +72,33 @@
 
 <script>
     const draggables = document.querySelectorAll('.draggable');
-
     draggables.forEach(draggable => {
         draggable.addEventListener('mousedown', (event) => {
             const height = draggable.clientHeight;
             const dragAreaHeight = height * 0.3;
             const mouseY = event.clientY - draggable.getBoundingClientRect().top;
-
             if (mouseY <= dragAreaHeight) {
                 let offsetX = event.clientX - draggable.getBoundingClientRect().left;
                 let offsetY = event.clientY - draggable.getBoundingClientRect().top;
-
                 function mouseMoveHandler(e) {
                     draggable.style.left = `${e.clientX - offsetX}px`;
                     draggable.style.top = `${e.clientY - offsetY}px`;
                 }
-
                 function mouseUpHandler() {
                     document.removeEventListener('mousemove', mouseMoveHandler);
                     document.removeEventListener('mouseup', mouseUpHandler);
                 }
-
                 document.addEventListener('mousemove', mouseMoveHandler);
                 document.addEventListener('mouseup', mouseUpHandler);
             }
+        });
+        draggable.addEventListener('click', () => {
+            draggable.style.zIndex = 1000;
+            draggables.forEach(other => {
+                if (other !== draggable) {
+                    other.style.zIndex = '';
+                }
+            });
         });
     });
 </script>
