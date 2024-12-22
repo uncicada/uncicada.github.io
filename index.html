@@ -8,57 +8,101 @@
         body {
             margin: 0;
             height: 100vh;
-            background-image: url('bg.png');
+            background-image: url('res/bg.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        #draggable {
-		
-            width: 600px;
-            height: 400px;
-            background-image: url('1.png');
-            background-size: cover;
-            background-position: center;
+        .draggable {
             position: absolute;
             cursor: default;
+        }
+
+        #addpic {
+            width: 761px; /* 替换为 res/addpic.png 的实际宽度 */
+            height: 771px; /* 替换为 res/addpic.png 的实际高度 */
+            background-image: url('res/addpic.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #addtext {
+            width: 641px; /* 替换为 res/addtext.png 的实际宽度 */
+            height: 858px; /* 替换为 res/addtext.png 的实际高度 */
+            background-image: url('res/addtext.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #char {
+            width: 761px; /* 替换为 res/char.png 的实际宽度 */
+            height: 1065px; /* 替换为 res/char.png 的实际高度 */
+            background-image: url('res/char.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #subtitle {
+            width: 3234px; /* 替换为 res/subtitle.png 的实际宽度 */
+            height: 182px; /* 替换为 res/subtitle.png 的实际高度 */
+            background-image: url('res/subtitle.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #title {
+            width: 1924px; /* 替换为 res/title.png 的实际宽度 */
+            height: 137px; /* 替换为 res/title.png 的实际高度 */
+            background-image: url('res/title.png');
+            background-size: cover;
+            background-position: center;
+        }
+		#main {
+            width: 3054px; /* 替换为 res/title.png 的实际宽度 */
+            height: 1718px; /* 替换为 res/title.png 的实际高度 */
+            background-image: url('res/main.png');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
 <body>
 
-<div id="draggable"> </div>
+<div id="addpic" class="draggable"></div>
+<div id="addtext" class="draggable"></div>
+<div id="char" class="draggable"></div>
+<div id="subtitle" class="draggable"></div>
+<div id="title" class="draggable"></div>
+<div id="main" class="draggable"></div>
 
 <script>
-    const draggable = document.getElementById('draggable');
+    const draggables = document.querySelectorAll('.draggable');
 
-    draggable.addEventListener('mousedown', (event) => {
-        const height = draggable.clientHeight;
-        const dragAreaHeight = height * 0.3;
-        const mouseY = event.clientY - draggable.getBoundingClientRect().top;
+    draggables.forEach(draggable => {
+        draggable.addEventListener('mousedown', (event) => {
+            const height = draggable.clientHeight;
+            const dragAreaHeight = height * 0.3;
+            const mouseY = event.clientY - draggable.getBoundingClientRect().top;
 
-        if (mouseY <= dragAreaHeight) {
-            let offsetX = event.clientX - draggable.getBoundingClientRect().left;
-            let offsetY = event.clientY - draggable.getBoundingClientRect().top;
+            if (mouseY <= dragAreaHeight) {
+                let offsetX = event.clientX - draggable.getBoundingClientRect().left;
+                let offsetY = event.clientY - draggable.getBoundingClientRect().top;
 
-            function mouseMoveHandler(e) {
-                draggable.style.left = `${e.clientX - offsetX}px`;
-                draggable.style.top = `${e.clientY - offsetY}px`;
+                function mouseMoveHandler(e) {
+                    draggable.style.left = `${e.clientX - offsetX}px`;
+                    draggable.style.top = `${e.clientY - offsetY}px`;
+                }
+
+                function mouseUpHandler() {
+                    document.removeEventListener('mousemove', mouseMoveHandler);
+                    document.removeEventListener('mouseup', mouseUpHandler);
+                }
+
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
             }
-
-            function mouseUpHandler() {
-                document.removeEventListener('mousemove', mouseMoveHandler);
-                document.removeEventListener('mouseup', mouseUpHandler);
-            }
-
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseup', mouseUpHandler);
-        }
-    });
-
-    draggable.addEventListener('click', () => {
-        //alert('你点击了我！');
+        });
     });
 </script>
 
